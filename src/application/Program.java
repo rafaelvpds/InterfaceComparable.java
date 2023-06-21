@@ -7,21 +7,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import entities.Employee;
+
 public class Program {
 	public static void main(String[] args) {
-		List<String> list = new ArrayList<>();
+		List<Employee> list = new ArrayList<>();
 		String path = "D:\\Curso\\Curso Java\\1-Codigos Alula\\Temp\\names.txt";
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-			String name = br.readLine();
-			while (name != null) {
-				list.add(name);
-				name = br.readLine();
+			String employeeCSV = br.readLine();
+
+			while (employeeCSV != null) {
+				String[] fields = employeeCSV.split(",");
+				list.add(new Employee(fields[0], Double.parseDouble(fields[1])));
+				employeeCSV = br.readLine();
 			}
-			
-			//Ordenar uma coleção
+
+			// Ordenar uma coleção
 			Collections.sort(list);
-			for (String s : list) {
-				System.out.println(s);
+			for (Employee emp : list) {
+				System.out.println(emp.getName() + ", " + "R$ " + emp.getSalary());
 			}
 		} catch (IOException e) {
 			System.out.println("Error: " + e.getMessage());
